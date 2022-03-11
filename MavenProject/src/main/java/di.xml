@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd"> -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd">        
+ 	
+ 	
+ 	<!-- We need the Spring FW IOC Container to know Annotation for Autowiring is configured -->
+	<context:annotation-config/>      
+
+
+    <!-- <bean id="aRef" class="com.thunderdrive.bean.Address">  -->
+    <bean id="address" class="com.thunderdrive.bean.Address">
+    <!-- id has same name as reference of Address class as attribute in Restaurant class, 
+    Hence it will be automatically picked up by the Spring FW IOC container-->
+		<property name="adrsLine" value="2144 B20"></property>
+		<property name="city" value="Ludhiana"></property>
+		<property name="state" value="Punjab"></property>
+		<property name="zipCode" value="141001"></property> 
+    </bean>
+    
+    
+    <bean id="rRef" class="com.thunderdrive.bean.Restaurant">  
+		<property name="name" value="Johns cafe"></property>
+		<property name="phone" value="+91 99999 11111"></property>
+		<property name="operatingHours" value="10:00 to 20:00"></property>
+		<property name="ratings" value="4.5"></property>
+		
+		<!-- IOC Container will use the setter method and pass the Address reference as aRef -->
+		<!--  Setter Injection -->
+		<!-- <property name="address" ref="aRef"></property> -->
+		
+		<!--  IOC Container will look for the Constructor with Address as Input and execute the same -->
+		<!-- Constructor Injection -->
+		<!-- <constructor-arg ref="aRef"/> -->
+		
+		
+		<!--  Setter Injection for 1 to Many -->
+		<property name="searchKeywords">
+		 <list>
+		 	<value>Johns Cafe</value>
+		 	<value>Coffee</value>
+		 	<value>Pastry</value>
+		 	<value>Cakes</value>
+		 	<value>Italian Cafe</value>
+		 </list>
+		</property>
+		
+		<property name="menu">
+		 <list>
+		 	<ref bean="fRef1"/>
+		 	<ref bean="fRef2"/>
+		 	<ref bean="fRef3"/>
+		 </list>	
+		</property>
+		
+    </bean>
+	
+	<bean id="fRef1" class="com.thunderdrive.bean.FoodItem">
+		<property name="name" value="Cream Roll"/>
+		<property name="price" value="25"/>
+	</bean>
+	
+	<bean id="fRef2" class="com.thunderdrive.bean.FoodItem">
+		<property name="name" value="Coffee"/>
+		<property name="price" value="50"/>
+	</bean>
+	
+	<bean id="fRef3" class="com.thunderdrive.bean.FoodItem">
+		<property name="name" value="Waffles"/>
+		<property name="price" value="40"/>
+	</bean>
+	
+		
+</beans>
+
+
+
+
+
+
+
+
+
+
+
